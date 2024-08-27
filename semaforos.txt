@@ -1,0 +1,9 @@
+P                             Q
+non-critical            non-critical
+
+signal(Q1)              signal(P1)
+wait(Q1)                wait(P1)
+critical-section        critical-section
+
+p y q no pueden avanzar a la zona 'critica' hasta que el otro haya llegado. De esta
+manera podemos coordinar procesos
