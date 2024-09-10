@@ -1,0 +1,35 @@
+2. En pseudocódigo, usando semáforos, resolver el problema del "rendez-vous" (o encuentro).
+ Consiste en tener dos procesos, tales que uno de ellos mientras ejecuta deberá alcanzar 
+ un punto(o marca) dentro de su código, y lo mismo con otro proceso. El primero de ambos
+  que llegue a la marca correspondiente deberá quedarse esperando a que el otro proceso 
+  llegue a su marca, y recién en el momento en que el otro haya llegado, ambos podrán 
+  continuar ejecutando su código a partir de allí. Escribir o discutir luego una solución 
+  análoga del rendez-vous para para 3 o más procesos, cada uno con su código y su marca dada. 
+  (Opcionalmente, implementarlo en Python u otro lenguaje, imprimiendo mensajes que informen
+   cuando los procesos lleguen a las marcas dadas. En este caso, dentro del código podrían 
+   utilizar algún paquete o clase existente que implemente semáforos...)
+
+    P                        Q
+
+non-critical            non-critical
+
+signal(Q1)              signal(P1)
+wait(P1)                wait(Q1)
+zona-encuentro          zona-encuentro
+
+p y q no pueden avanzar a la zona 'critica' hasta que el otro haya llegado. De esta
+manera podemos coordinar procesos
+
+    P                   Q               K
+
+signal(P1)           signal(Q1)       signal(K1)
+wait(Q1)             wait(K1)         wait(P1)
+wait(K1)             wait(P1)         wait(Q1)
+
+para n procesos
+
+    P1               P2               P3                   Pn
+signal(P1)      signal(P2)      signal(P3)          signal(Pn)
+
+for i in range(n):
+    if 
