@@ -9,16 +9,25 @@
    cuando los procesos lleguen a las marcas dadas. En este caso, dentro del código podrían 
    utilizar algún paquete o clase existente que implemente semáforos...)
 
-    P                        Q
+Para dos procesos:
+P1 = 0
+Q1 = 0
 
-non-critical            non-critical
+    P                            Q
 
-signal(Q1)              signal(P1)
-wait(P1)                wait(Q1)
-zona-encuentro          zona-encuentro
+zona-pre-encuentro        zona-pre-encuentro
 
-p y q no pueden avanzar a la zona 'critica' hasta que el otro haya llegado. De esta
-manera podemos coordinar procesos
+signal(P1)                signal(Q1)
+wait(Q1)                  wait(P1)
+zona-encuentro            zona-encuentro
+
+p y q no pueden avanzar a la zona del encuentro hasta que el otro haya llegado. De esta
+manera podemos coordinar procesos.
+
+Para tres procesos:
+P1 = 0
+Q1 = 0
+K1 = 0
 
     P                   Q               K
 
@@ -26,10 +35,39 @@ signal(P1)           signal(Q1)       signal(K1)
 wait(Q1)             wait(K1)         wait(P1)
 wait(K1)             wait(P1)         wait(Q1)
 
-para n procesos
+Para n procesos:
+P1 = 0 
+P2 = 0
+P3 = 0
+...
+Pn = 0
 
     P1               P2               P3                   Pn
+id_s = 1        id_s = 2        id_s = 3            id_s = n
 signal(P1)      signal(P2)      signal(P3)          signal(Pn)
 
-for i in range(n):
-    if 
+//Para todos
+
+                    for i in range(n):
+                        if i != id_s :
+                            wait(Pi)
+
+Otra opción para n procesos:
+
+int contadorProcesos = 0
+semaforo contadorLibre = 1      //para proteger el acceso al contador
+semaforo avanzarTodos = 0       //semáforo que permite avanzar a todos los procesos
+
+Para i de 1 a N:
+            Pi
+    //zona-pre-encuentro
+
+    wait(contadorLibre)
+    contadorProcesos += 1
+    if contadorProcesos == N:       //si es verdadero todos llegaron a la zona del encuentro
+        signal(avanzarTodos)        // el último en llegar activará el semáforo avanzarTodos
+    signal(contadorLibre)
+
+    wait(avanzarTodos)
+    signal(avanzarTodos)
+    //zona-encuentro
