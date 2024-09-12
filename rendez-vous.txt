@@ -1,13 +1,4 @@
-2. En pseudocódigo, usando semáforos, resolver el problema del "rendez-vous" (o encuentro).
- Consiste en tener dos procesos, tales que uno de ellos mientras ejecuta deberá alcanzar 
- un punto(o marca) dentro de su código, y lo mismo con otro proceso. El primero de ambos
-  que llegue a la marca correspondiente deberá quedarse esperando a que el otro proceso 
-  llegue a su marca, y recién en el momento en que el otro haya llegado, ambos podrán 
-  continuar ejecutando su código a partir de allí. Escribir o discutir luego una solución 
-  análoga del rendez-vous para para 3 o más procesos, cada uno con su código y su marca dada. 
-  (Opcionalmente, implementarlo en Python u otro lenguaje, imprimiendo mensajes que informen
-   cuando los procesos lleguen a las marcas dadas. En este caso, dentro del código podrían 
-   utilizar algún paquete o clase existente que implemente semáforos...)
+2. Rendez-vous. Pseudocódigo
 
 Para dos procesos:
 P1 = 0
@@ -19,9 +10,10 @@ zona-pre-encuentro        zona-pre-encuentro
 
 signal(P1)                signal(Q1)
 wait(Q1)                  wait(P1)
+
 zona-encuentro            zona-encuentro
 
-p y q no pueden avanzar a la zona del encuentro hasta que el otro haya llegado. De esta
+Nota: p y q no pueden avanzar a la zona del encuentro hasta que el otro haya llegado. De esta
 manera podemos coordinar procesos.
 
 Para tres procesos:
@@ -29,11 +21,14 @@ P1 = 0
 Q1 = 0
 K1 = 0
 
-    P                   Q               K
+    P                   Q                       K
+zona-pre-encuentro   zona-pre-encuentro     zona-pre-encuentro
 
-signal(P1)           signal(Q1)       signal(K1)
-wait(Q1)             wait(K1)         wait(P1)
-wait(K1)             wait(P1)         wait(Q1)
+signal(P1)           signal(Q1)             signal(K1)
+wait(Q1)             wait(K1)               wait(P1)
+wait(K1)             wait(P1)               wait(Q1)
+
+zona-encuentro       zona-encuentro         zona-encuentro
 
 Para n procesos:
 P1 = 0 
@@ -43,13 +38,13 @@ P3 = 0
 Pn = 0
 
     P1               P2               P3                   Pn
-id_s = 1        id_s = 2        id_s = 3            id_s = n
+id = 1          id = 2          id = 3              id = n
 signal(P1)      signal(P2)      signal(P3)          signal(Pn)
 
 //Para todos
 
                     for i in range(n):
-                        if i != id_s :
+                        if i != id:
                             wait(Pi)
 
 Otra opción para n procesos:

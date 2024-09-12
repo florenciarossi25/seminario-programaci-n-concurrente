@@ -1,7 +1,4 @@
-1. Describir en pseudocódigo una solución al problema de productor-consumidor, 
-para el caso de 2 productores y 1 consumidor, todos sobre un mismo buffer. 
-Escribir todas las aclaraciones que sean necesarias.
-
+1. Productor - Consumidor. Pseudocódigo
 
 buffer 
 semBufferVacio = 1
@@ -14,10 +11,12 @@ wait(semBufferVacio)          wait(semBufferVacio)      d <- consume(buffer)
 append(buffer, d)             append(buffer, d)         signal(semBufferVacio)
 signal(semBufferLleno)        signal(semBufferLleno)
 
+
+Notas:
 wait -> si sem == 1, decrementa en 1 y avanza (el otro p no puede entrar)
         si sem == 0, espera
 
 signal -> incrementa el sem en 1
 
-en el código cuando un productor coloca d en el buffer, el otro podrá entrar unicamente
-luego de que el consumidor consuma d
+En el código cuando un productor coloca 'd' en el buffer, el otro productor podrá entrar unicamente
+luego de que el consumidor consuma 'd'
